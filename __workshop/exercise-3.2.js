@@ -2,17 +2,17 @@
 // ---------------------------------
 
 const opencage = require('opencage-api-client');
-require('dotenv').config();
 
 const getPositionFromAddress = (address) => {
-  const requestObj = {
-    key: '<MY_API_KEY>',
-    q: '<QUERY_STRING>',
-  };
+
+  return opencage.geocode({ q: address, language: 'en'})
+    .then(data => {
+      return data.results[0].geometry;
+    })
 
   // return something...
 };
 
-getPositionFromAddress(
-  '1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8'
-).then((response) => console.log(response));
+getPositionFromAddress('1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8').then(response => console.log(response));
+
+module.exports = { getPositionFromAddress };
